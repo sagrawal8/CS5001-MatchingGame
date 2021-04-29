@@ -6,7 +6,7 @@ Program: Project
 import turtle
 import traceback
 import random
-from alternate import *
+from card_class import *
 import time
 import os
 
