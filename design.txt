@@ -1,0 +1,242 @@
+•	CLASSES: 
+	o	Attribute name (attribute type): function of attribute
+			default value
+	o	Methods: 
+			Parameters: Parameters taken by method
+			Returns: What the method returns
+			Does: Method description
+
+•	MatchingGame – Handles set up of game and all logical operations 
+	o	playerName (string): Holds name of player
+	o	numCards (int): Number of cards displayed (8, 10 or 12)
+		default value: -1
+	o	guesses (int): Holds number of guesses
+			default value: 0
+	o	matches (int): Holds number of matches
+			default value: 0
+	o	imagesList (list[string]): holds image file names
+			default value: []
+	o	positionList (list[int]): Holds the same index as index of the card’s center in xcod and ycod for each card drawn on the board
+			default value: []
+	o	cards (list[instance(alternate.py)]): Holds face down/face up card obj
+			default value: []
+	o	xcod (list[int]): X co-ordinate of center of each card 
+			default value: [-353, -190, -27, 143, -353, -190, -27, 143,
+          	  			-353, -190, -27, 143]
+	o	ycod (list[int]): Y co-ordinate of center of each card 
+			 default value: [264, 264, 264, 264, 72, 72, 72, 72, -120,
+					-120, -120, -120]
+	o	countMatched (int): Holds number of cards matched
+			default value: 0
+	o	selectedObj1 (instance(alternate.py)): Holds first card flipped by player
+			default value: None
+	o	selectedObj2 (instance(alternate.py)): Holds second card flipped by player
+			default value: None
+	o	xTemp (int): Holds x co-od of selectedObj1 to prevent matching with same card
+			default value: None
+	o	xIndex (int): Holds x co-od of selectedObj1 to prevent matching with same card.
+			default value: None
+	o	default (list[string]): Holds default file image names if user provided images don’t work
+			default value: ["2_of_diamonds.gif", "3_of_hearts.gif", 
+					"ace_of_diamonds.gif", "jack_of_spades.gif",
+					"king_of_diamonds.gif", "queen_of_hearts.gif"]
+	o	hideAllCards (self):
+			Parameters: None
+			Returns: None
+			Does: Hides all cards to display error message in form
+ 			of .gif file to prevent error message from being 
+			displayed behind the card image (prevent overlapping). 
+	o	quit (self, x, y):
+		Parameters:
+		•	 x (int): x co-od of mouse click
+		•	 y (int): y co-od of mouse click
+		Returns: None
+		Does: If mouse click was on the turtle 'button', 
+		game is quit after displaying a quit message
+	o	drawPlayArea (self):
+			Parameters: None
+			Returns: None
+			Does: Marks the region within which cards are displayed.
+	o	drawStatusBar (self): 
+			Parameters: None
+			Does: Marks the region within which guesses, and matches are displayed.
+	o	drawLeaderBoard (self): 
+			Parameters: None
+			Returns: None
+			Does: Marks the region within which leaderboard
+			and matches are displayed.
+	o	displayQuitButton (self): 
+			Parameters: None
+			Returns: None
+			Does: Displays quit button that can be used anytime to quit the game. 
+			Note: quit button does not work when existing dialog boxes are present.
+	o	printLeaderBoard (self): 
+			Parameters: None
+			Returns: None
+			Does: Prints the leaderboard from leaderboard.txt in the area marked by drawLeaderBoard(). If leaderboard.txt is not available, a '.gif' file saying so is displayed on screen and program execution proceeds.
+	o	__init__(self): Constructor
+			Parameters: None
+			Returns: None
+			Does: Uses setUpTurtle to draw play area, status bar area, and leaderboard area. Displays leaderboard, quit button and status bar on screen.
+	o	promptPlayerName (self):
+			Parameters: None
+			Returns: None
+			Does: Prompts user for name which is then stored under class variable 'playerName'. Uses a dialog box. If no name is provided, name is defaulted to 'Anonymous'.
+	o	promptNumberOfCards (self):
+			Parameters: None            
+			Returns: None
+			Does: Prompts user for number of cards to be displayed on the board. This value is then stored under class variable 'numCards'. Uses a dialog box.
+	o	promptImagesForCards (self):
+			Parameters: None            
+			Returns: None
+			Does: Prompts user for the name of the text file if custom cards are required using a dialog box. Card file names are then read from file and stored in a list, imagesList.
+			If wrong file name or no file name is provided, default images from list, default, are used after displaying a '.gif' image on screen.
+			Raises error for lesser number of images in file than number of cards provided by user.
+			Raises error if image is not found while adding shape.
+			Finally, these images are added to the screen for turtle to access. positionList is initialized with a length of 'len(self.imagesList) * 2'.
+	o	setUpAndReadCards (self):
+			Parameters: None            
+			Returns: None
+			Does: Displays current guesses and matches in status bar using a turtle (statusBarTurtle).
+	o	getCardPositions (self):
+			Parameters: None            
+			Returns: None
+			Does: Assigns positions to image cards randomly using centers
+		of cards as provided in xcod and ycod.
+			Random variable's upper bound is 'len(self.imagesList) * 2 - 1'
+			which can be 7, 9 or 11, denoting 8, 10 or 12 cards.
+			The outer loop goes over imageList twice since we need two of
+			each card.
+			If a card is assigned a center, that value of the center is
+			replaced by -1 so it can't be used again.            
+			Since the board contains displays rows of 4 cards, the top left card is card 1, the one to its right is card 2 and so on. If one reached the right most card, numbering starts from the left most card of the next row.
+			The index of each card in imagesList is stored in an array positionList depending on where it is placed on the board.
+			Eg. If imageList is ["dog.gif", "dog2.gif", "dog3.gif", "dog4.gif"], an example of positionList could be [0, 1, 0, 2, 3, 3, 2, 1]. This means dog.gif is card 1, dog2.gif is card 2, and so on.
+
+
+	o	allMatched (self):
+			Parameters: None            
+			Returns: 
+			•	True: if all cards have been matched
+			•	False: if all cards have not been matched
+			Does: Returns True if all cards have been matched and False if all cards have not been matched
+	o	getImagesList (self):
+			Parameters: None            
+			Returns:
+			•	 imagesList (list[(string)]): List containing image files names used for card pictures
+			Does: Getter function for imagesList.
+	o	getGuessesAndMatches (self):
+			Parameters: None            
+			Returns:
+			•	String contains guesses and matchesDoes: Getter function for imagesList.
+			Does: Getter function for guesses and matches.
+	o	getNumCards (self):
+			Parameters: None            
+			Returns:
+			getNumCards (int): Number of cards displayed on the board.
+			Does: Getter function for numCards.
+	o	getPositionList (self):
+			Parameters: None            
+			Returns: positionList (list[(int)]): list containing positions of cards on the board.
+			Does: Getter function for positionList.
+	o	drawCardObjects (self): 
+			Parameters: None            
+			Returns: None
+			Does: Draws cards on the board by initializing objects of class card_turtle. 
+			Draws all cards face down. Position of cards are from positionList. 
+			Objects are stored in list, cards.
+	o	goto (self, x, y):
+			Parameters:
+			•	 x (int): x co-od of mouse click
+			•	 y (int): y co-od of mouse click            
+		Returns: None
+		Does: Called upon mouse click on card.
+			If no card selected, card clicked on is flipped. If clicked on again card is flipped again.
+			If one card is selected, second card clicked on is flipped. 
+			If they match, centers of card are marked with value -2 in list xcod to prevent clicking on them again. Guesses and matches are updated. If all cards are matched, winning message is displayed, and leaderboard is updated.
+			If cards don't match, guesses are updated, cards are face down.       
+	o	writeToFile (self):
+			Parameters: None                          
+			Returns: None
+			Does: Opens leaderboard.txt and updates it. If less than 8 scores are in the file, the file is appended with the most recent score.
+			If 8 scores are present, each score is compared with the most recent score and the highest score is overwritten. 
+			If the most recent score is the highest score, nothing is overwritten.
+	o	main ():
+			Parameters: None                          
+			Returns: None
+			Does: Essentially the driver function for the game
+•	card_turtle – Class associated with each card drawn on the board. Each instance of this class is an individual turtle object
+	o	flipped (boolean): is card visible or not
+			default value: True
+	o	xvalue (int): x co-od of center of card
+			default value: 0
+	o	yvalue (int): y co-od of center of card
+			default value: 0
+	o	height (int): height of card
+			constant value: 150
+	o	height (int): width of card
+			constant value: 100
+	o	back (string): holds image file name for back of card
+			default value: “card_back.gif”
+	o	image (string): holds .gif file name associated with card
+			default value: None
+	o	turtle (instance(turtle)): turtle responsible for drawing card
+			default value: None
+	o	__init__ (self, x, y, image, flipped): Constructor
+			Parameters:
+			•	x (int): x co-od of center of card
+			•	y (int): y co-od of center of card
+			•	image (string): .gif image associated with card
+			•	flipped (boolean): is card visible or not
+			Returns: None
+			Does: Creates a new turtle object, defines co-od for center of card, sets visibility for card and assigns image to card.
+	o	changeVisibility (self):
+			Parameters: None
+			Returns: None
+			Does: Changes the visibility of card. If card is visible, card is now hidden and vice versa.
+	o	hideCard(self):
+			Parameters: None
+			Returns: None
+			Does: Hides card.
+	o	showCard (self):
+			Parameters: None
+			Returns: None
+			Does: Shows card.
+	o	contains (self, x, y):
+			Parameters:
+			•	x (int): x co-od of mouse click
+			•	y (int): y co-od of mouse click
+			Returns: 
+			•	True if mouse click is on a card
+			•	False if mouse click is outside card
+			Does: Checks whether mouse click was within region of card. Use height and width of card to help do so.
+	o	draw (self):
+			Parameters: None
+			Returns: 
+			•	tuurtle (instance(turtle)): turtle object
+			Does: Checks whether mouse click was within region of card. Use height and width of card to help do so.
+
+The only data structures used in this program are lists.
+
+Approach to Programming and Testing this game:
+	First, I had to map out the play area which displays the cards, the leader board section 
+and status bar section. I used the position service for this to get exact co-ordinates for the 
+boxes to be drawn. This was done by visual inspection to make sure the boxes were drawn where they 
+were supposed to. Position service was also used to find the centers of cards drawn on the board 
+and layouts for 8, 10 or 12 cards was inspected visually as well. 
+Second comes checking the contains function which is responsible for only allowing mouse clicks 
+that are over cards. This was inspected by drawing cards and seeing the effects of mouse clicks 
+all over the board. 
+Next step was checking the flipping of cards and making sure cards flipped when clicked on, didn’t 
+flip back. Cards should also only be allowed to be selected in pairs. I drew an even and odd number
+of cards on the board and checked the effects of mouse clicks on the cards. I then checked if the 
+status bar updated upon matching/not-matching cards which was done  ung getter statements for 
+guesses and matches. 
+Next up was ending the game when all cards were matched which was checked visually too. 
+Writing scores to the leaderboard file was done by running the game multiple times and checking 
+the contents of the file.
+Note: No unit test cases were written, and all testing was done by visual inspection of the working
+of the game or using print statements to check appropriate values held by variables. 
+I was confident of most functions (except contains) written in alternate.py and that didn’t 
+require much testing.
+
